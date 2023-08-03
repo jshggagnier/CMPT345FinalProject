@@ -10,6 +10,8 @@ from scipy.stats import chi2_contingency
 
 ## data frame contains 221 months worth of average prices for houses of varying types, first column is date
 monthlyAvgPrice = pd.read_csv("ByApartment.csv", parse_dates=['Date'])
+AirBNBdata = pd.read_csv("AirBNB-By-Category/part-00000-ddd8f2ea-fdc4-4fa2-8620-bb1fa1d1335f-c000.csv.gz",parse_dates=["date"])
+
 
 # data column
 composite_prices = monthlyAvgPrice['Composite']
@@ -56,12 +58,23 @@ plot.show()
 
 print("Hello world! Analysis complete!")
 
-#These data sets are the stats for the listings (may need to be accessed in spark)
-#firstQuarterListings = pd.read_csv("Sept_Listing_Data2022.csv")
-#secondQuarterListings = pd.read_csv("Dec_Listing_Data2022.csv")
-#thirdQuarterListings = pd.read_csv("March_Listing_Data2023.csv")
-#fourthQuarterListings = pd.read_csv("June_Listing_Data2023.csv")
+## start of AIRBNB Analysis
+plot.scatter(AirBNBdata["date"], AirBNBdata["Apartment"], c="red", label="Apartment")
+plot.scatter(AirBNBdata["date"], AirBNBdata["House"], c="blue", label="House")
+plot.title("AirBNB Data Solo")
+plot.ylabel("cost ($)")
+plot.xlabel("year of rental taking place")
+plot.legend()
+plot.show()
 
-## LargeAIRBNBCalendar contains the daily prices of the listings, but doesn't have anything other than the ID associated
-## join the listings (Id,Property_type) datasets with the summarised monthly prices (ID, Average price for the month/day)
-## We can summarise by month or day if we want. This probably should be done in spark, but feel free to use any method that you know.
+
+## creating comparison ranges
+MonthlyAirBNB = AirBNBdata.groupby(pd.Grouper(key='date', freq='1MS')).mean()
+print(MonthlyAirBNB.index.tolist())
+plot.scatter(MonthlyAirBNB.index.tolist(), MonthlyAirBNB["Apartment"], c="red", label="Apartment")
+plot.scatter(MonthlyAirBNB.index.tolist(), MonthlyAirBNB["House"], c="blue", label="House")
+plot.title("AirBNB data Monthly Solo")
+plot.ylabel("cost ($)")
+plot.xlabel("year of rental taking place")
+plot.legend()
+plot.show()
