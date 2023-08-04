@@ -30,7 +30,7 @@ one_storey_normality, one_storey_pvalue = stats.normaltest(one_storey_prices)
 two_storey_normality, two_storey_pvalue = stats.normaltest(two_storey_prices)
 Apartment_normality, Apartment_pvalue = stats.normaltest(apartment_unit_prices)
 
-print ("Part 1 - Housing Analysis")
+print (" Part 1 - Housing Analysis")
 print("'Composite', Normality: ", composite_normality, " P-value:", composite_pvalue)
 print("'Townhouse', Normality: ", townhouse_normality, " P-value:", townhouse_pvalue)
 print("'One Storey', Normality: ", one_storey_normality, " P-value:", one_storey_pvalue)
@@ -85,7 +85,7 @@ AirBNBDates = AirBNBdata['date']
 
 apartment_normality, apartment_pvalue = stats.normaltest(AirBNBApartment)
 house_normality, house_pvalue = stats.normaltest(AirBNBHouse)
-print ('\n',"AirBNB Rental Analysis")
+print ('\n',"Part 2 - AirBNB Rental Analysis")
 print("Normality: ", apartment_normality, " P-value:", apartment_pvalue)
 print("Normality: ", house_normality, " P-value:", house_pvalue)
 
@@ -103,6 +103,10 @@ plot.ylabel("Prices ($)")
 plot.xlabel("Year of Rental Taking Place")
 plot.legend()
 plot.show()
+
+# Correlation Coefficient
+correlation_coefficients_AirBNB = AirBNBdata[['Apartment', 'House']].corr()
+print ("Correlation Coefficients is: ","\n",correlation_coefficients_AirBNB)
 
 ## creating comparison ranges
 MonthlyAirBNB = AirBNBdata.groupby(pd.Grouper(key='date', freq='1MS')).mean()
@@ -122,7 +126,7 @@ print("Analysis complete!")
 # Forecasting 
 # Linear regression
 # Predict x property type pricing with a given property type  pricing
-
+print ('\n',"Forecasting Analysis")
 def predict_property_prices(predictor, target, df, future_periods, correlation_coefficients):
     
     # Columns 
