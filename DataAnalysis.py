@@ -8,7 +8,6 @@ from scipy import stats
 monthlyAvgPrice = pd.read_csv("ByApartment.csv", parse_dates=['Date'])
 AirBNBdata = pd.read_csv("AirBNB-By-Category/part-00000-ddd8f2ea-fdc4-4fa2-8620-bb1fa1d1335f-c000.csv.gz",parse_dates=["date"])
 
-
 # data column
 composite_prices = monthlyAvgPrice['Composite']
 apartment_unit_prices = monthlyAvgPrice['Apartment_unit']
@@ -16,7 +15,7 @@ one_storey_prices = monthlyAvgPrice['One_storey']
 two_storey_prices = monthlyAvgPrice['Two_storey']
 townhouse_prices = monthlyAvgPrice ['Townhouse']
 
-#normality and p values
+# normality and p values
 composite_normality, composite_pvalue = stats.normaltest(composite_prices)
 townhouse_normality, townhouse_pvalue = stats.normaltest(townhouse_prices)
 one_storey_normality, one_storey_pvalue = stats.normaltest(one_storey_prices)
@@ -45,6 +44,7 @@ plot.scatter(monthlyAvgPrice["Date"],monthlyAvgPrice["One_storey"],c="blue",labe
 plot.scatter(monthlyAvgPrice["Date"],monthlyAvgPrice["Two_storey"],c="purple",label="two-storey")
 plot.scatter(monthlyAvgPrice["Date"],monthlyAvgPrice["Apartment_unit"],c="yellow",label="Apartment_unit")
 plot.scatter(monthlyAvgPrice["Date"],monthlyAvgPrice["Townhouse"],c="green",label="Townhouse")
+
 
 # creat histogram
 plot.figure(figsize=(10, 6))
@@ -81,3 +81,5 @@ plot.ylabel("cost ($)")
 plot.xlabel("year of rental taking place")
 plot.legend()
 plot.show()
+
+# forecasting 

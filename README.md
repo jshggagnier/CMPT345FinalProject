@@ -4,21 +4,24 @@ All data for the project is located at: https://drive.google.com/drive/folders/1
 
 Download that file from google drive as it is larger than the 100mb limit on github!
 
-
-Part 1 - Real Estate Listing Analysis (Daphne)
-
-    Monthly Average Price Data - 
-    Check if columns are correlated.
-
-Part 2 - Real Estate Listing vs Airbnb Analysis 
-(with small and large datasets)
 Requirement: 
+    - Local Pyspark
+    - Libraries: Pandas, Matplotlib, Numpy
+
+
+
+Part 1 - Data Cleaning  
+(not necessary as all results have been done uploaded) 
+
     - data cleaning: filtering data and cleaning values 
-        - Small: Parham
-        - Large: Josh
+        - data is also further categorized into small and large data sets
+            - Small datasets shows the listings 
+            - Large shows the bookings in each listing 
+            for example, Listings that did not get booked were filtered out as they are not relevant
+        - Listing and Bookings "PysparkDataMerge" are then joined together after for analysis 
     - Analysis the data correlation between real estate listing and airbnb rentals 
 
-Property type - Validate data: 
-and make sure the listing room types matches with propety type
-    1) Is the price the housing corrlated with the Airbnb retals 
-    2) 
+Part 2 - Data Analysis 
+(analysis the correlation between cost and household for rentals and owners)
+
+    a) 
