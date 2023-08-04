@@ -30,6 +30,7 @@ one_storey_normality, one_storey_pvalue = stats.normaltest(one_storey_prices)
 two_storey_normality, two_storey_pvalue = stats.normaltest(two_storey_prices)
 Apartment_normality, Apartment_pvalue = stats.normaltest(apartment_unit_prices)
 
+print ("Part 1 - Housing Analysis")
 print("'Composite', Normality: ", composite_normality, " P-value:", composite_pvalue)
 print("'Townhouse', Normality: ", townhouse_normality, " P-value:", townhouse_pvalue)
 print("'One Storey', Normality: ", one_storey_normality, " P-value:", one_storey_pvalue)
@@ -84,9 +85,9 @@ AirBNBDates = AirBNBdata['date']
 
 apartment_normality, apartment_pvalue = stats.normaltest(AirBNBApartment)
 house_normality, house_pvalue = stats.normaltest(AirBNBHouse)
-
-print("'AirBNB Apartment', Normality: ", apartment_normality, " P-value:", apartment_pvalue)
-print("'AirBNB House', Normality: ", house_normality, " P-value:", house_pvalue)
+print ('\n',"AirBNB Rental Analysis")
+print("Normality: ", apartment_normality, " P-value:", apartment_pvalue)
+print("Normality: ", house_normality, " P-value:", house_pvalue)
 
 
 # Equality of variances
@@ -99,13 +100,13 @@ plot.scatter(AirBNBdata["date"], AirBNBdata["Apartment"], c="red", label="Apartm
 plot.scatter(AirBNBdata["date"], AirBNBdata["House"], c="blue", label="House")
 plot.title("AirBNB Data Solo")
 plot.ylabel("Prices ($)")
-plot.xlabel("year of rental taking place")
+plot.xlabel("Year of Rental Taking Place")
 plot.legend()
 plot.show()
 
 ## creating comparison ranges
 MonthlyAirBNB = AirBNBdata.groupby(pd.Grouper(key='date', freq='1MS')).mean()
-print(MonthlyAirBNB.index.tolist())
+#print(MonthlyAirBNB.index.tolist())
 plot.scatter(MonthlyAirBNB.index.tolist(), MonthlyAirBNB["Apartment"], c="red", label="Apartment")
 plot.scatter(MonthlyAirBNB.index.tolist(), MonthlyAirBNB["House"], c="blue", label="House")
 plot.title("AirBNB data Monthly Solo")
@@ -153,7 +154,7 @@ def predict_property_prices(predictor, target, df, future_periods, correlation_c
     plot.legend()
     plot.show()
 
-    # Find the best predictor for apartment example
+    # Find the best predictor for the apartment example
     correlation = correlation_coefficients.loc['Apartment_unit']
     best_predictor = correlation.drop('Apartment_unit').idxmax()
     print("Best Predictor for Apartment Prices:", best_predictor)
