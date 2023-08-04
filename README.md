@@ -6,7 +6,7 @@ Download that file from google drive as it is larger than the 100mb limit on git
 
 Requirement: 
     - Local Pyspark
-    - Libraries: Pandas, Matplotlib, Numpy, Pyarrow
+    - Libraries: Pandas, Matplotlib, Numpy, Pyarrow, Sklearn 
 
 
 
@@ -24,4 +24,11 @@ Part 1 - Data Cleaning
 Part 2 - Data Analysis 
 (analysis the correlation between cost and household for rentals and owners)
 
-    a) 
+    a) Housing 
+    Analyze on the price correlation between different property types (apartment, townhouse, one storey, two storey, and composite)
+        - find out if data is normal distributed, p value, correlation. 
+        - plot diagram to demostrate 
+        - Use a forecasting model to predict one type on property prices using one type of property price
+        - determine which one is the best predictor using property type x
+        
+    b) Airbnb
