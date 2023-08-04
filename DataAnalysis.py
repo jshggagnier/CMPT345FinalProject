@@ -58,7 +58,7 @@ plot.xlabel("Year of Sale")
 plot.legend()
 plot.show()
 
-# create histogram
+# Histogram
 plot.figure(figsize=(10, 6))
 plot.hist(composite_prices, bins=20, alpha=0.7, color='red', label='Composite Prices')
 plot.hist(apartment_unit_prices, bins=20, alpha=0.7, color='yellow', label='Apartment Unit Prices')
@@ -120,7 +120,7 @@ print("Analysis complete!")
 
 # Forecasting 
 # Linear regression
-# Predict x property type x pricing with property type y pricing
+# Predict x property type pricing with a given property type  pricing
 
 def predict_property_prices(predictor, target, df, future_periods, correlation_coefficients):
     
