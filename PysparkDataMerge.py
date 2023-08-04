@@ -28,7 +28,7 @@ def main(in_directory, in_directory2, out_directory):
     JoinedData = JoinedData.sort("date")
 
     #safe to do as the single computer we are using already has all the files, and this is simply less than there was before
-    JoinedData.coalesce(1).write.csv(out_directory, header=True, mode='overwrite',compression="gzip")
+    JoinedData.coalesce(1).write.parquet(out_directory, mode='overwrite',compression="gzip")
 
 
 if __name__=='__main__':

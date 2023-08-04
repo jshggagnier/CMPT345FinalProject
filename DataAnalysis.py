@@ -4,9 +4,14 @@ import matplotlib.pyplot as plot
 import sys
 from scipy import stats
 
+
 ## data frame contains 221 months worth of average prices for houses of varying types, first column is date
 monthlyAvgPrice = pd.read_csv("ByApartment.csv", parse_dates=['Date'])
-AirBNBdata = pd.read_csv("AirBNB-By-Category/part-00000-ddd8f2ea-fdc4-4fa2-8620-bb1fa1d1335f-c000.csv.gz",parse_dates=["date"])
+
+## This is the easiest way I can think of to read spark output into pandas!
+
+AirBNBdata = pd.read_parquet("AirBNB-By-Category")
+AirBNBdata["date"] = pd.to_datetime(AirBNBdata["date"])
 
 # data column
 composite_prices = monthlyAvgPrice['Composite']
