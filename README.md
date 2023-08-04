@@ -6,7 +6,7 @@ Download that file from google drive as it is larger than the 100mb limit on git
 
 Requirement: 
     - Local Pyspark
-    - Libraries: Pandas, Matplotlib, Numpy
+    - Libraries: Pandas, Matplotlib, Numpy, Pyarrow
 
 
 
