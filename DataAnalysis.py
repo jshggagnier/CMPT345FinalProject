@@ -76,28 +76,21 @@ plot.show()
 
 
 ## start of AIRBNB Analysis
-MonthlyAirBNB = monthlyAvgPrice['Composite']
-MonthlyAirBNB = monthlyAvgPrice['Apartment_unit']
-MonthlyAirBNB = monthlyAvgPrice['One_storey']
-MonthlyAirBNB = monthlyAvgPrice['Two_storey']
-MonthlyAirBNB = monthlyAvgPrice ['Townhouse']
+AirBNBApartment = AirBNBdata['Apartment']
+AirBNBHouse = AirBNBdata['House']
+AirBNBDates = AirBNBdata['date']
 
 # normality and p values
 
-composite_normality, composite_pvalue = stats.normaltest(composite_prices)
-townhouse_normality, townhouse_pvalue = stats.normaltest(townhouse_prices)
-one_storey_normality, one_storey_pvalue = stats.normaltest(one_storey_prices)
-two_storey_normality, two_storey_pvalue = stats.normaltest(two_storey_prices)
-Apartment_normality, Apartment_pvalue = stats.normaltest(apartment_unit_prices)
+apartment_normality, apartment_pvalue = stats.normaltest(AirBNBApartment)
+house_normality, house_pvalue = stats.normaltest(AirBNBHouse)
 
-print("'Composite', Normality: ", composite_normality, " P-value:", composite_pvalue)
-print("'Townhouse', Normality: ", townhouse_normality, " P-value:", townhouse_pvalue)
-print("'One Storey', Normality: ", one_storey_normality, " P-value:", one_storey_pvalue)
-print("'Two Storey', Normality: ", two_storey_normality, " P-value:", two_storey_pvalue)
-print("'Apartment', Normality: ", Apartment_normality, " P-value:", Apartment_pvalue)
+print("'AirBNB Apartment', Normality: ", apartment_normality, " P-value:", apartment_pvalue)
+print("'AirBNB House', Normality: ", house_normality, " P-value:", house_pvalue)
+
 
 # Equality of variances
-levene_test, levene_pvalue = stats.levene(composite_prices, apartment_unit_prices, one_storey_prices, two_storey_prices, townhouse_prices)
+levene_test, levene_pvalue = stats.levene(AirBNBApartment, AirBNBHouse)
 print("Levene Test - Equality of Variances:")
 print("Statistic:", levene_test)
 print("P-value:", levene_pvalue)
