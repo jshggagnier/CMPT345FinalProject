@@ -8,44 +8,40 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
 
-## data frame contains 221 months worth of average prices for houses of varying types, first column is date
+# Getting Data
+## Data frame contains 221 months worth of average prices for houses of varying types, first column is date
 monthlyAvgPrice = pd.read_csv("ByApartment.csv", parse_dates=['Date'])
 
-## This is the easiest way I can think of to read spark output into pandas!
+## Data frame contains 221 months worth of average prices for houses of varying types, first column is date
+monthlyAvgPrice = pd.read_csv("ByApartment.csv", parse_dates=['Date'])
 
+## Read spark output into pandas!
 AirBNBdata = pd.read_parquet("AirBNB-By-Category")
 AirBNBdata["date"] = pd.to_datetime(AirBNBdata["date"])
 
-# data column
-composite_prices = monthlyAvgPrice['Composite']
-apartment_unit_prices = monthlyAvgPrice['Apartment_unit']
-one_storey_prices = monthlyAvgPrice['One_storey']
-two_storey_prices = monthlyAvgPrice['Two_storey']
-townhouse_prices = monthlyAvgPrice ['Townhouse']
+# column data
+columns = ['Composite', 'Apartment_unit', 'One_storey', 'Two_storey', 'Townhouse']
+labels = ['Composite Prices', 'Apartment Unit Prices', 'One Storey Prices', 'Two Storey Prices', 'Townhouse Prices']
+data = [monthlyAvgPrice[col] for col in columns]
 
-# normality and p values
-composite_normality, composite_pvalue = stats.normaltest(composite_prices)
-townhouse_normality, townhouse_pvalue = stats.normaltest(townhouse_prices)
-one_storey_normality, one_storey_pvalue = stats.normaltest(one_storey_prices)
-two_storey_normality, two_storey_pvalue = stats.normaltest(two_storey_prices)
-Apartment_normality, Apartment_pvalue = stats.normaltest(apartment_unit_prices)
+# normality and p value
+def print_normality_and_p_value(data, label):
+    normality, p_value = stats.normaltest(data)
+    print(f"'{label}', Normality: {normality}, P-value: {p_value}")
+    
+# Print normality and p values
+print("\n, Part 1 - Housing Analysis")
+for col, label in zip(columns, labels):
+    print_normality_and_p_value(monthlyAvgPrice[col], label)
 
-print (" Part 1 - Housing Analysis")
-print("'Composite', Normality: ", composite_normality, " P-value:", composite_pvalue)
-print("'Townhouse', Normality: ", townhouse_normality, " P-value:", townhouse_pvalue)
-print("'One Storey', Normality: ", one_storey_normality, " P-value:", one_storey_pvalue)
-print("'Two Storey', Normality: ", two_storey_normality, " P-value:", two_storey_pvalue)
-print("'Apartment', Normality: ", Apartment_normality, " P-value:", Apartment_pvalue)
-
-# Equality of variances
-levene_test, levene_pvalue = stats.levene(composite_prices, apartment_unit_prices, one_storey_prices, two_storey_prices, townhouse_prices)
+levene_test, levene_pvalue = stats.levene(*data)
 print("Levene Test - Equality of Variances:")
 print("Statistic:", levene_test)
 print("P-value:", levene_pvalue)
 
 # Correlation Coefficient
-correlation_coefficients = monthlyAvgPrice[['Composite', 'Apartment_unit', 'One_storey', 'Two_storey', 'Townhouse']].corr()
-print ("Correlation Coefficients is: ","\n",correlation_coefficients)
+correlation_coefficients = monthlyAvgPrice[columns].corr()
+print("Correlation Coefficients is: \n", correlation_coefficients)
 
 # Sample plot to ensure you have both python and the data downloaded.
 plot.scatter(monthlyAvgPrice["Date"],monthlyAvgPrice["Composite"],c="red",label="Composite")
@@ -59,39 +55,23 @@ plot.xlabel("Year of Sale")
 plot.legend()
 plot.show()
 
-# Histogram
-plot.figure(figsize=(10, 6))
-plot.hist(composite_prices, bins=20, alpha=0.7, color='red', label='Composite Prices')
-plot.hist(apartment_unit_prices, bins=20, alpha=0.7, color='yellow', label='Apartment Unit Prices')
-plot.hist(one_storey_prices, bins=20, alpha=0.7, color='blue', label='One Storey')
-plot.hist(two_storey_prices, bins=20, alpha=0.7, color='purple', label='Two storey')
-plot.hist(townhouse_prices, bins=20, alpha=0.7, color='green', label='Townhouse')
 
-plot.title("Comparison of different forms of housing")
-plot.ylabel("Prices ($)")
-plot.xlabel("year of sale")
-plot.legend()
-plot.show()
-
+print(" -- End of Housing Analysis complete -- \n")
 ##  END OF HOUSING 
 
 
-## start of AIRBNB Analysis
-AirBNBApartment = AirBNBdata['Apartment']
-AirBNBHouse = AirBNBdata['House']
-AirBNBDates = AirBNBdata['date']
+## Start of AIRBNB Analysis
+# column list
+Airbnb_columns = ['Apartment', 'House']
+Airbnb_labels = ['Apartment Prices', 'House Price']
+Airbnb_data = [AirBNBdata[col] for col in Airbnb_columns]
 
-# normality and p values
+# Print normality and p values
+print("\n", "Part 2 - AIRBNB Analysis")
+for col, label in zip(Airbnb_columns, Airbnb_labels):
+    print_normality_and_p_value(AirBNBdata[col], label)
 
-apartment_normality, apartment_pvalue = stats.normaltest(AirBNBApartment)
-house_normality, house_pvalue = stats.normaltest(AirBNBHouse)
-print ('\n',"Part 2 - AirBNB Rental Analysis")
-print("Normality: ", apartment_normality, " P-value:", apartment_pvalue)
-print("Normality: ", house_normality, " P-value:", house_pvalue)
-
-
-# Equality of variances
-levene_test, levene_pvalue = stats.levene(AirBNBApartment, AirBNBHouse)
+levene_test, levene_pvalue = stats.levene(*Airbnb_data)
 print("Levene Test - Equality of Variances:")
 print("Statistic:", levene_test)
 print("P-value:", levene_pvalue)
@@ -119,7 +99,7 @@ plot.xlabel("Year of rental taking place")
 plot.legend()
 plot.show()
 
-print("Analysis complete!")
+print(" -- End of Airbnb Analysis complete -- \n ")
 
 ## END of AirBNB
 
@@ -133,7 +113,7 @@ def predict_property_prices(predictor, target, df, future_periods, correlation_c
     predictor_prices = df[predictor]
     target_prices = df[target]
     
-    # Linear regression
+    # Linear Regression Model
     X = predictor_prices.values.reshape(-1, 1)
     y = target_prices.values.reshape(-1, 1)
 
@@ -163,13 +143,13 @@ def predict_property_prices(predictor, target, df, future_periods, correlation_c
     best_predictor = correlation.drop('Apartment_unit').idxmax()
     print("Best Predictor for Apartment Prices:", best_predictor)
     
-# example: using apartment prices to make a prediction 
+# Example: using apartment prices to make a prediction 
 
 predict_property_prices ('Apartment_unit', 'Composite', monthlyAvgPrice, 24,correlation_coefficients)
 predict_property_prices ('Apartment_unit', 'One_storey', monthlyAvgPrice, 24,correlation_coefficients)
 predict_property_prices ('Apartment_unit', 'Two_storey', monthlyAvgPrice, 24,correlation_coefficients)
 predict_property_prices ('Apartment_unit', 'Townhouse', monthlyAvgPrice, 24,correlation_coefficients)
 
-## END of forecastin
+## END of Forecasting
 
-## END of analysis 
+## END of Analysis 

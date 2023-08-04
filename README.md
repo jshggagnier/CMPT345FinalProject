@@ -1,8 +1,8 @@
 # CMPT353FinalProject
 Our data analysis project, with all data and python code
-All data for the project is located at: https://drive.google.com/drive/folders/14ok3WD8Ed3JP1WOJMsDnd4U9FsQvyV_V?usp=drive_link
 
-Download that file from google drive as it is larger than the 100mb limit on github!
+
+
 
 Requirement: 
     - Local Pyspark
@@ -22,13 +22,13 @@ Part 1 - Data Cleaning
     - Analysis the data correlation between real estate listing and airbnb rentals 
 
 Part 2 - Data Analysis 
-(analysis the correlation between cost and household for rentals and owners)
+Analysis the correlation between cost and household for rentals and owners
 
     a) Housing 
     Analyze on the price correlation between different property types (apartment, townhouse, one storey, two storey, and composite)
-        - find out if data is normal distributed, p value, correlation. 
-        - plot diagram to demostrate 
+        - Find out if data is normal distributed, p value, correlation. 
+        - Plot diagram to demostrate 
         - Use a forecasting model to predict one type on property prices using one type of property price
-        - determine which one is the best predictor using property type x
+        - Determine which one is the best predictor using property type x
         
     b) Airbnb
