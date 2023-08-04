@@ -2,11 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plot
 import sys
-from statsmodels.nonparametric.smoothers_lowess import lowess
-from pykalman import KalmanFilter
 from scipy import stats
-from scipy.stats import mannwhitneyu
-from scipy.stats import chi2_contingency
 
 ## data frame contains 221 months worth of average prices for houses of varying types, first column is date
 monthlyAvgPrice = pd.read_csv("ByApartment.csv", parse_dates=['Date'])
@@ -33,7 +29,15 @@ print("'One Storey', Normality: ", one_storey_normality, " P-value:", one_storey
 print("'Two Storey', Normality: ", two_storey_normality, " P-value:", two_storey_pvalue)
 print("'Apartment', Normality: ", Apartment_normality, " P-value:", Apartment_pvalue)
 
+# Levene test for equality of variances
+levene_test, levene_pvalue = stats.levene(composite_prices, apartment_unit_prices, one_storey_prices, two_storey_prices, townhouse_prices)
+print("Levene Test - Equality of Variances:")
+print("Statistic:", levene_test)
+print("P-value:", levene_pvalue)
 
+#correlation coefficient
+correlation_coefficients = monthlyAvgPrice[['Composite', 'Apartment_unit', 'One_storey', 'Two_storey', 'Townhouse']].corr()
+print ("Correlation Coefficients is: ","\n",correlation_coefficients)
 
 # Sample plot to ensure you have both python and the data downloaded.
 plot.scatter(monthlyAvgPrice["Date"],monthlyAvgPrice["Composite"],c="red",label="Composite")
@@ -66,7 +70,6 @@ plot.ylabel("cost ($)")
 plot.xlabel("year of rental taking place")
 plot.legend()
 plot.show()
-
 
 ## creating comparison ranges
 MonthlyAirBNB = AirBNBdata.groupby(pd.Grouper(key='date', freq='1MS')).mean()
