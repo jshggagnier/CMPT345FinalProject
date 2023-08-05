@@ -24,6 +24,9 @@ columns = ['Composite', 'Apartment_unit', 'One_storey', 'Two_storey', 'Townhouse
 labels = ['Composite Prices', 'Apartment Unit Prices', 'One Storey Prices', 'Two Storey Prices', 'Townhouse Prices']
 data = [monthlyAvgPrice[col] for col in columns]
 
+def to_timestamp(x):
+    return x.timestamp()
+
 # normality and p value
 def print_normality_and_p_value(data, label):
     normality, p_value = stats.normaltest(data)
@@ -55,6 +58,30 @@ plot.xlabel("Year of Sale")
 plot.legend()
 plot.show()
 
+monthlyAvgPrice['timestamp'] = monthlyAvgPrice['Date'].apply(to_timestamp)
+def getResiduals(col):
+    fit = stats.linregress(monthlyAvgPrice['timestamp'], monthlyAvgPrice[col])
+    prediction_df = pd.DataFrame()
+    prediction_df['timestamp'] = monthlyAvgPrice['timestamp']
+    prediction_df['prediction'] = monthlyAvgPrice['timestamp']*fit.slope + fit.intercept
+    residuals = monthlyAvgPrice[col] - prediction_df['prediction']
+    normality, p_value = stats.normaltest(residuals)
+    plot.xticks(rotation=25)
+    plot.plot(monthlyAvgPrice['Date'], monthlyAvgPrice[col], 'b.', alpha=0.5, label='Actual Data')
+    plot.plot(monthlyAvgPrice['Date'], prediction_df['prediction'], 'r-', linewidth=3, label='Best Fitted Line')
+    plot.title(f'Price Over Time - {col}')
+    plot.xlabel('Date')
+    plot.ylabel('Price')
+    plot.legend()
+    plot.show()
+
+    plot.hist(residuals, bins=15)
+    plot.title(f'Histogram of {col} Residuals')
+    plot.show()
+    print(f"P Value of {col} Residuals:", p_value)
+
+for col in columns:
+    getResiduals(col)
 
 print(" -- End of Housing Analysis complete -- \n")
 ##  END OF HOUSING 
