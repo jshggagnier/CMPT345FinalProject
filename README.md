@@ -42,24 +42,18 @@ Analyzed the correlation between different types of buildings for both separate 
 		- plot the residuals before and after
 	
 Easy pip access:
-
+```
 pip install pyarrow
-
 pip install numpy
-
 pip install pandas
-
 pip install matplotlib
-
 pip install sklearn
-
 pip install scipy
-
+```
 
 Note: any commits done by the following people are actually:
-
+```
 Littlebigone = Daphne
-
 pklucky = Parham
-
 Jshggagnier = Joshua
+```
