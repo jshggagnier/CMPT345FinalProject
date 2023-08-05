@@ -27,21 +27,6 @@ data = [monthlyAvgPrice[col] for col in columns]
 def to_timestamp(x):
     return x.timestamp()
 
-# normality and p value
-def print_normality_and_p_value(data, label):
-    normality, p_value = stats.normaltest(data)
-    print(f"'{label}', Normality: {normality}, P-value: {p_value}")
-    
-# Print normality and p values
-print("\n, Part 1 - Housing Analysis")
-for col, label in zip(columns, labels):
-    print_normality_and_p_value(monthlyAvgPrice[col], label)
-
-levene_test, levene_pvalue = stats.levene(*data)
-print("Levene Test - Equality of Variances:")
-print("Statistic:", levene_test)
-print("P-value:", levene_pvalue)
-
 # Correlation Coefficient
 correlation_coefficients = monthlyAvgPrice[columns].corr()
 print("Correlation Coefficients is: \n", correlation_coefficients)
@@ -86,49 +71,6 @@ for col in columns:
 print(" -- End of Housing Analysis complete -- \n")
 ##  END OF HOUSING 
 
-
-## Start of AIRBNB Analysis
-# column list
-Airbnb_columns = ['Apartment', 'House']
-Airbnb_labels = ['Apartment Prices', 'House Price']
-Airbnb_data = [AirBNBdata[col] for col in Airbnb_columns]
-
-# Print normality and p values
-print("\n", "Part 2 - AIRBNB Analysis")
-for col, label in zip(Airbnb_columns, Airbnb_labels):
-    print_normality_and_p_value(AirBNBdata[col], label)
-
-levene_test, levene_pvalue = stats.levene(*Airbnb_data)
-print("Levene Test - Equality of Variances:")
-print("Statistic:", levene_test)
-print("P-value:", levene_pvalue)
-
-plot.scatter(AirBNBdata["date"], AirBNBdata["Apartment"], c="red", label="Apartment")
-plot.scatter(AirBNBdata["date"], AirBNBdata["House"], c="blue", label="House")
-plot.title("AirBNB Data Solo")
-plot.ylabel("Prices ($)")
-plot.xlabel("Year of Rental Taking Place")
-plot.legend()
-plot.show()
-
-# Correlation Coefficient
-correlation_coefficients_AirBNB = AirBNBdata[['Apartment', 'House']].corr()
-print ("Correlation Coefficients is: ","\n",correlation_coefficients_AirBNB)
-
-## creating comparison ranges
-MonthlyAirBNB = AirBNBdata.groupby(pd.Grouper(key='date', freq='1MS')).mean()
-#print(MonthlyAirBNB.index.tolist())
-plot.scatter(MonthlyAirBNB.index.tolist(), MonthlyAirBNB["Apartment"], c="red", label="Apartment")
-plot.scatter(MonthlyAirBNB.index.tolist(), MonthlyAirBNB["House"], c="blue", label="House")
-plot.title("AirBNB data Monthly Solo")
-plot.ylabel("Prices ($)")
-plot.xlabel("Year of rental taking place")
-plot.legend()
-plot.show()
-
-print(" -- End of Airbnb Analysis complete -- \n ")
-
-## END of AirBNB
 
 # Forecasting 
 # Linear regression
